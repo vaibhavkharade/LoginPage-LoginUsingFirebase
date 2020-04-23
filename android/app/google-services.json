@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "713966600225",
+    "firebase_url": "https://loginapp-fd152.firebaseio.com",
+    "project_id": "loginapp-fd152",
+    "storage_bucket": "loginapp-fd152.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713966600225:android:e01166a7000a2a00ec2360",
+        "android_client_info": {
+          "package_name": "com.example.loginproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713966600225-bbm4desgq2g03ed6ql0pr9v0ponbdlph.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpw4EhzuKURz5KwjasIdY2wRf8EZAv_SQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713966600225-bbm4desgq2g03ed6ql0pr9v0ponbdlph.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
