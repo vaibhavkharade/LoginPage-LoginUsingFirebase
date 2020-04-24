@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:loginproj/DesignClip/clip.dart';
+import 'package:loginproj/DesignClip/backGPaint.dart';
 
 class SignIn extends StatefulWidget {
+  final Function toggle;
+  final color1;
+  final color2;
+
+  SignIn({this.toggle , this.color1 , this.color2});
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
+  var loginFlag;
+  var regFlag;
+
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-      CustomPaint(painter: Mypainter(), child: Container()),
+      CustomPaint(painter: Mypainter(s1:widget.color1 , s2:widget.color2), child: Container()),
       Form(
           key: formKey,
           child: Padding(
@@ -32,7 +40,9 @@ class _SignInState extends State<SignIn> {
                           child: IconButton(
                               focusColor: Colors.white60,
                               icon: Icon(Icons.person, color: Colors.white54),
-                              onPressed: () {}),
+                              onPressed: () {
+                                widget.toggle();
+                              }),
                         ),
                         RichText(
                           text: TextSpan(children: [
@@ -44,7 +54,6 @@ class _SignInState extends State<SignIn> {
                                 text: 'ogin',
                                 style: TextStyle(
                                     fontSize: 32, fontWeight: FontWeight.w200)),
-                            
                           ]),
                         ),
                       ],
@@ -58,7 +67,7 @@ class _SignInState extends State<SignIn> {
                         alignLabelWithHint: true,
                         suffixText: '@',
                         prefixIcon: Icon(Icons.email, color: Colors.white60),
-                        errorStyle: TextStyle(color: Colors.black),
+                        errorStyle: TextStyle(color: Colors.white60),
                         focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18)),
                         errorBorder: OutlineInputBorder(
@@ -79,7 +88,7 @@ class _SignInState extends State<SignIn> {
                     TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
-                        errorStyle: TextStyle(color: Colors.black),
+                        errorStyle: TextStyle(color: Colors.white60),
                         focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18)),
                         hintText: 'password',

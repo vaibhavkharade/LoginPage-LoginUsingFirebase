@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:loginproj/DesignClip/clip.dart';
+import 'package:loginproj/DesignClip/backGPaint.dart';
 
 class Register extends StatefulWidget {
+
+  final Function toggle;
+   final color1;
+  final color2;
+  Register({this.toggle , this.color1 , this.color2});
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -13,7 +18,7 @@ class _RegisterState extends State<Register> {
     return Scaffold(
         body: Stack(children: [
       CustomPaint(
-        painter:Mypainter(),
+        painter:Mypainter(s1:widget.color1 , s2:widget.color2),
         child:Container()
       ),
       Form(
@@ -35,7 +40,9 @@ class _RegisterState extends State<Register> {
                           child: IconButton(
                               color:Colors.white54,
                               icon: Icon(Icons.mode_edit,),
-                              onPressed: () {}),
+                              onPressed: () {
+                                widget.toggle();
+                              }),
                         ),
                        RichText(text:TextSpan(children: [
                         TextSpan(
@@ -85,7 +92,7 @@ class _RegisterState extends State<Register> {
                     TextFormField(
                       obscureText: true,
                       decoration: InputDecoration(
-                        errorStyle: TextStyle(color: Colors.black),
+                        errorStyle: TextStyle(color: Colors.white60),
                         focusedErrorBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18)),
                         hintText: 'password',
@@ -127,7 +134,7 @@ class _RegisterState extends State<Register> {
                         height: 60,
                         child: Text('*click the above login icon to login',
                             style: TextStyle(
-                                color: Colors.white54,
+                                color: Colors.white,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w200)))
                   ]),

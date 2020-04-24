@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 class Mypainter extends CustomPainter {
+  var s1;
+  var s2;
+
+  Mypainter({this.s1, this.s2});
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint();
-    paint1.color = Colors.purple[400];
+    paint1.color = s1;
     paint1.style = PaintingStyle.fill;
     var path1 = Path();
     path1.addRect(Rect.fromLTWH(0, 0, size.width, size.height));
@@ -22,7 +27,7 @@ class Mypainter extends CustomPainter {
     canvas.drawPath(path2, paint2);
 
     var paint3 = Paint();
-    paint3.color = Colors.red[400];
+    paint3.color = s2;
     paint3.style = PaintingStyle.fill;
     var path3 = Path();
     path3.lineTo(0, size.height / 2);
