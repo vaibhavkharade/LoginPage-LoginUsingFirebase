@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loginproj/Auth_services/auth.dart';
 import 'package:loginproj/DesignClip/backGPaint.dart';
 
 class SignIn extends StatefulWidget {
@@ -6,21 +7,27 @@ class SignIn extends StatefulWidget {
   final color1;
   final color2;
 
-  SignIn({this.toggle , this.color1 , this.color2});
+  SignIn({this.toggle, this.color1, this.color2});
   @override
   _SignInState createState() => _SignInState();
 }
 
 class _SignInState extends State<SignIn> {
-  var loginFlag;
-  var regFlag;
+  var email = '';
+  var password = '';
+  var error = '';
+
+  TextEditingController _controller1 = TextEditingController();
+  TextEditingController _controller2 = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
-      CustomPaint(painter: Mypainter(s1:widget.color1 , s2:widget.color2), child: Container()),
+      CustomPaint(
+          painter: Mypainter(s1: widget.color1, s2: widget.color2),
+          child: Container()),
       Form(
           key: formKey,
           child: Padding(
@@ -60,32 +67,48 @@ class _SignInState extends State<SignIn> {
                     ),
                     SizedBox(height: 60),
                     TextFormField(
-                      decoration: InputDecoration(
-                        hintText: 'email',
-                        hintStyle: TextStyle(
-                            color: Colors.white60, fontWeight: FontWeight.w300),
-                        alignLabelWithHint: true,
-                        suffixText: '@',
-                        prefixIcon: Icon(Icons.email, color: Colors.white60),
-                        errorStyle: TextStyle(color: Colors.white60),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        errorBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                            borderRadius: BorderRadius.circular(18)),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(color: Colors.indigo[900]),
+                        controller: _controller1,
+                        decoration: InputDecoration(
+                          hintText: 'email',
+                          hintStyle: TextStyle(
+                              color: Colors.white60,
+                              fontWeight: FontWeight.w300),
+                          alignLabelWithHint: true,
+                          suffixText: '@',
+                          prefixIcon: Icon(Icons.email, color: Colors.white60),
+                          errorStyle: TextStyle(color: Colors.white60),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(18)),
+                          errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.red),
+                              borderRadius: BorderRadius.circular(18)),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15),
+                            borderSide: BorderSide(color: Colors.indigo[900]),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(40),
+                              borderSide: BorderSide(color: Colors.white60)),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(40),
-                            borderSide: BorderSide(color: Colors.white60)),
-                      ),
-                      validator: (value) =>
-                          value.isEmpty ? 'email must not be empty' : null,
-                    ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Email must not be empty";
+                          } else if (value.isNotEmpty && !value.contains('@')) {
+                            _controller1.clear();
+                            return "'Email must contain '@' sign'";
+                          } else {
+                            if (Authentication().signIn(email, password) ==
+                                null) {
+                              return 'Incorrect email *';
+                            } else {
+                              email = value ;
+                              return null;
+                            }
+                          }
+                        }),
                     SizedBox(height: 18),
                     TextFormField(
+                      controller: _controller2,
                       obscureText: true,
                       decoration: InputDecoration(
                         errorStyle: TextStyle(color: Colors.white60),
@@ -106,8 +129,17 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(40),
                             borderSide: BorderSide(color: Colors.white60)),
                       ),
-                      validator: (value) =>
-                          value.isEmpty ? 'Password must not be empty' : null,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'password must not be empty';
+                        } else if (value.isNotEmpty && value.length < 6) {
+                          _controller2.clear();
+                          return 'password length must be atleat 6';
+                        } else {
+                          password = value ;
+                          return null;
+                        }
+                      },
                     ),
                     SizedBox(height: 40),
                     Container(
@@ -120,9 +152,8 @@ class _SignInState extends State<SignIn> {
                                 fontWeight: FontWeight.w200)),
                         hoverColor: Colors.indigo,
                         onPressed: () {
-                          if (formKey.currentState.validate()) {
-                            print('validated');
-                          }
+                          formKey.currentState.validate();
+                          Authentication().signIn(email, password);
                         },
                       ),
                     ),
